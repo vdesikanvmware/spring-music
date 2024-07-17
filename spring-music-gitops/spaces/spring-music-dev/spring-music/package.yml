@@ -1,0 +1,28 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: spring-music.apps.local.20240610.907.34346
+spec:
+  refName: spring-music.apps.local
+  releasedAt: "2024-06-10T09:10:26Z"
+  template:
+    spec:
+      deploy:
+      - kapp:
+          rawOptions:
+          - --wait=false
+      fetch:
+      - imgpkgBundle:
+          image: us-east1-docker.pkg.dev/advanced-editions-engineering/tap-saas/spring-music@sha256:10f4a39e0df4f58814db003a7453082900f7ade9f20e59664d2ad20c78aa8de2
+      template:
+      - ytt:
+          paths:
+          - config/
+      - kbld:
+          paths:
+          - .imgpkg/images.yml
+          - '-'
+  valuesSchema:
+    openAPIv3: null
+  version: 20240610.907.34346

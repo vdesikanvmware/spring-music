@@ -1,0 +1,25 @@
+---
+apiVersion: tanzu.vmware.com/v1
+kind: SpringCloudGatewayRouteConfig
+metadata:
+  name: spring-music-config
+spec:
+  routes:
+  - predicates:
+    - Path=/**,/albums/**
+    - Method=GET,POST,DELETE
+    order: 1000
+    filters:
+    - StripPrefix=0
+  service:
+    name: spring-music
+---
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGatewayMapping
+metadata:
+  name: spring-music-mapping
+spec:
+  gatewayRef:
+    name: spring-cloud-gateway
+  routeConfigRef:
+    name: spring-music-config
