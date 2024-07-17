@@ -1,0 +1,29 @@
+---
+apiVersion: services.tanzu.vmware.com/v1
+kind: PreProvisionedService
+metadata:
+  name: spring-music-db
+spec:
+  bindingConnectors:
+  - name: read-write
+    description: Read-write MySQL available in all availability targets
+    type: mysql
+    secretRef:
+      name: spring-music-db
+---
+apiVersion: services.tanzu.vmware.com/v1
+kind: ServiceBinding
+metadata:
+  name: spring-music-db
+spec:
+  targetRef:
+    apiGroup: apps.tanzu.vmware.com
+    kind: ContainerApp
+    name: spring-music
+  serviceRef:
+    apiGroup: services.tanzu.vmware.com
+    kind: PreProvisionedService
+    name: spring-music-db
+    connectorName: read-write
+  alias: db
+--- 
