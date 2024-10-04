@@ -12,7 +12,7 @@ spec:
     packageRefName: spring-music.apps.local
     summary: git:8f364e9 @ 2024-06-10T09:07:34Z
     version: 20240610.907.34346
-  image: us-east1-docker.pkg.dev/advanced-editions-engineering/tap-saas/spring-music@sha256:bc7ae1fda74d8cbb66d86c0e627adbff6dea24c29297e47f02124f74979f3287
+  image: quay.io/vdesikanvmware/springmusic@sha256:c55871bef18e4832d0e4ca2850df7416ccaea79000ab357cbbd18d4eafd7d379
   nonSecretEnv:
   - name: JAVA_TOOL_OPTIONS
     value: -Dmanagement.endpoint.health.probes.add-additional-paths=true -Dmanagement.health.probes.enabled=true
