@@ -2,23 +2,27 @@ apiVersion: apps.tanzu.vmware.com/v1
 kind: ContainerApp
 metadata:
   annotations:
+    apps.tanzu.vmware.com/promotable: ""
+    apps.tanzu.vmware.com/promote-group: ContainerApp/spring-music
     containerapp.apps.tanzu.vmware.com/class: kubernetes
   name: spring-music
 spec:
   content:
-    buildTimestamp: "2024-06-10T09:07:34Z"
-    gitCommit: 8f364e93a29eeb9d17e5682119de617b9fde32f0-dirty
-    gitURL: github.com/cloudfoundry-samples/spring-music.git
+    buildTimestamp: "2024-10-04T10:57:29Z"
+    gitCommit: c237cd1bdd953c5cd00263b2f512aa9abc4fe455-dirty
+    gitURL: github.com/vdesikanvmware/spring-music.git
+    packageImage: quay.io/vdesikanvmware/springmusic@sha256:c55871bef18e4832d0e4ca2850df7416ccaea79000ab357cbbd18d4eafd7d379
     packageRefName: spring-music.apps.local
-    summary: git:8f364e9 @ 2024-06-10T09:07:34Z
-    version: 20240610.907.34346
+    packageVersion: 20241004.1057.29585
+    summary: git:c237cd1 @ 2024-10-04T10:57:29Z
+    version: 20241004.1057.29585
+  health:
+    maxUnavailableReplicas: 10%
   image: quay.io/vdesikanvmware/springmusic@sha256:5d4ce9ffb847387e31a59cf81abfccc837b4929c4a64b07b24c84ba64b2611d4
   nonSecretEnv:
   - name: JAVA_TOOL_OPTIONS
     value: -Dmanagement.endpoint.health.probes.add-additional-paths=true -Dmanagement.health.probes.enabled=true
       -Dserver.port=8080 -Dserver.shutdown.grace-period=24s
-  - name: BP_JVM_VERSION
-    value: "17"
   ports:
   - name: main
     port: 8080
@@ -71,8 +75,16 @@ spec:
   - apiGroup: data.packaging.carvel.dev
     for: kubernetes.delete
     kind: Package
-    name: spring-music.apps.local.20240610.907.34346
+    name: spring-music.apps.local.20241004.1057.29585
   - for: kubernetes.delete
+    kind: Secret
+    name: spring-music-values
+  - for: kubernetes.set-content-hash
+    keyPath: .data['values.yml']->[yaml].contentHash
+    kind: Secret
+    name: spring-music-values
+  - for: kubernetes.set-content-version
+    keyPath: .data['values.yml']->[yaml].contentVersion
     kind: Secret
     name: spring-music-values
   resources:
