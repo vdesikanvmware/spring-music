@@ -2,23 +2,27 @@ apiVersion: apps.tanzu.vmware.com/v1
 kind: ContainerApp
 metadata:
   annotations:
+    apps.tanzu.vmware.com/promotable: ""
+    apps.tanzu.vmware.com/promote-group: ContainerApp/spring-music
     containerapp.apps.tanzu.vmware.com/class: kubernetes
   name: spring-music
 spec:
   content:
-    buildTimestamp: "2024-06-10T09:07:34Z"
-    gitCommit: 8f364e93a29eeb9d17e5682119de617b9fde32f0-dirty
-    gitURL: github.com/cloudfoundry-samples/spring-music.git
+    buildTimestamp: "2024-10-09T09:15:46Z"
+    gitCommit: b1414f2cd28a7cab496147bbe62bf7ba6a02e21d-dirty
+    gitURL: github.com/vdesikanvmware/spring-music.git
+    packageImage: quay.io/tpapps/sm/spring-music@sha256:cb5e59054cf58736c4b164beb8d55225483f43faad57ceede753f243e3bfc68e
     packageRefName: spring-music.apps.local
-    summary: git:8f364e9 @ 2024-06-10T09:07:34Z
-    version: 20240610.907.34346
-  image: quay.io/vdesikanvmware/springmusic@sha256:5d4ce9ffb847387e31a59cf81abfccc837b4929c4a64b07b24c84ba64b2611d4
+    packageVersion: 20241009.915.46248
+    summary: git:b1414f2 @ 2024-10-09T09:15:46Z
+    version: 20241009.915.46248
+  health:
+    maxUnavailableReplicas: 10%
+  image: quay.io/tpapps/sm/spring-music:20241009.915.46248@sha256:33d7d8a413c37a68839d1d3cc82ddc3fb4e027a4479d33313a25b10e4a586bc0
   nonSecretEnv:
   - name: JAVA_TOOL_OPTIONS
     value: -Dmanagement.endpoint.health.probes.add-additional-paths=true -Dmanagement.health.probes.enabled=true
       -Dserver.port=8080 -Dserver.shutdown.grace-period=24s
-  - name: BP_JVM_VERSION
-    value: "17"
   ports:
   - name: main
     port: 8080
@@ -71,8 +75,16 @@ spec:
   - apiGroup: data.packaging.carvel.dev
     for: kubernetes.delete
     kind: Package
-    name: spring-music.apps.local.20240610.907.34346
+    name: spring-music.apps.local.20241009.915.46248
   - for: kubernetes.delete
+    kind: Secret
+    name: spring-music-values
+  - for: kubernetes.set-content-hash
+    keyPath: .data['values.yml']->[yaml].contentHash
+    kind: Secret
+    name: spring-music-values
+  - for: kubernetes.set-content-version
+    keyPath: .data['values.yml']->[yaml].contentVersion
     kind: Secret
     name: spring-music-values
   resources:
