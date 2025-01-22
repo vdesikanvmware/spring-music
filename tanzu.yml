@@ -3,4 +3,5 @@ configuration:
   dev:
     paths:
     - .tanzu/config/
+  id: config-b00dcf68-ba2a-4bb2-a848-26ab58a5d10c
 kind: TanzuConfig
