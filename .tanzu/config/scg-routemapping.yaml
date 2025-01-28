@@ -1,9 +1,0 @@
-apiVersion: "tanzu.vmware.com/v1"
-kind: SpringCloudGatewayMapping
-metadata:
-  name: spring-music-mapping
-spec:
-  gatewayRef:
-    name: spring-cloud-gateway
-  routeConfigRef:
-    name: spring-music-config
