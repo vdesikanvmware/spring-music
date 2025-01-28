@@ -3,6 +3,8 @@ kind: ContainerApp
 metadata:
   creationTimestamp: null
   name: spring-music
+  annotations:
+    apps.tanzu.vmware.com/promotable: ""
 spec:
   build:
     buildpacks: {}
