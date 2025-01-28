@@ -1,4 +1,3 @@
----
 apiVersion: bitnami.database.tanzu.vmware.com/v1alpha1
 kind: MySQLInstance
 metadata:
@@ -7,21 +6,3 @@ metadata:
     apps.tanzu.vmware.com/promotable: ""
 spec:
   storageGB: 1
----
-apiVersion: services.tanzu.vmware.com/v1
-kind: ServiceBinding
-metadata:
-  name: spring-music-db
-  annotations:
-    apps.tanzu.vmware.com/promotable: ""
-spec:
-  targetRef:
-    apiGroup: apps.tanzu.vmware.com
-    kind: ContainerApp
-    name: spring-music
-  serviceRef:
-    apiGroup: bitnami.database.tanzu.vmware.com
-    kind: MySQLInstance
-    name: spring-music-db
-  alias: db
----
